@@ -4,8 +4,7 @@
     "react",
     "jsx-a11y",
     "import",
-    "prettier",
-    "react-hooks"
+    "prettier"
   ],
   "env": {
     "browser": true,
