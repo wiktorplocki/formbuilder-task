@@ -13,23 +13,25 @@ class FormInput extends React.Component {
   render() {
     const { inputType, isSubInput } = this.state;
     return (
-      <Form>
-        <FormGroup>
-          {isSubInput ? (
-            <h1>I'm a sub input!</h1>
-          ) : null}
-          <Label for="formQuestion">Question</Label>
-          <Input type="text" id="formQuestion" />
-          <Label for="formType">Type</Label>
-          <Input type="select" id="formType">
-            <option>Yes / No</option>
-            <option>Text</option>
-            <option>Number</option>
-          </Input>
-        </FormGroup>
-        <Button color="primary">Add Sub-Input</Button>
-        <Button color="danger">Delete</Button>
-      </Form>
+      <div className={isSubInput ? 'sub-input' : null}>
+        <Form>
+          <FormGroup>
+            {isSubInput ? (
+              <h1>I'm a sub input!</h1>
+            ) : null}
+            <Label for="formQuestion">Question</Label>
+            <Input type="text" id="formQuestion" />
+            <Label for="formType">Type</Label>
+            <Input type="select" id="formType">
+              <option>Yes / No</option>
+              <option>Text</option>
+              <option>Number</option>
+            </Input>
+          </FormGroup>
+          <Button color="primary">Add Sub-Input</Button>
+          <Button color="danger">Delete</Button>
+        </Form>
+      </div>
     )
   }
 }
