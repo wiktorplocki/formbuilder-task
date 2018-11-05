@@ -33,7 +33,6 @@
       {
         "singleQuote": true
       }
-    ],
-    "react-hooks/rules-of-hooks": "error"
+    ]
   }
 }
