@@ -1,14 +1,17 @@
 import React from 'react';
+import shortid from 'shortid';
 import { Button, Container, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class FormInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      question: this.props.item.question ? this.props.item.question : '',
-      answer: this.props.item.answer ? this.props.item.answer : '',
-      inputType: this.props.item.type ? this.props.item.type : 'boolean',
-      operandType: this.props.item.operandType ? this.props.item.operandType : '===',
+      id: this.props.item ? this.props.item.id : shortid.generate(),
+      question: this.props.item ? this.props.item.question : '',
+      answer: '',
+      type: this.props.item ? this.props.item.type : 'boolean',
+      operand: this.props.item ? this.props.item.operand : '===',
+      children: this.props.item ? this.props.item.children : []
     };
   }
 
@@ -23,24 +26,24 @@ class FormInput extends React.Component {
   handleInputTypeChange = e => {
     switch (e.target.value) {
       case 'Yes / No':
-        return this.setState({ inputType: 'boolean' });
+        return this.setState({ type: 'boolean' });
       case 'Number':
-        return this.setState({ inputType: 'number' });
+        return this.setState({ type: 'number' });
       case 'Text':
-        return this.setState({ inputType: 'text' });
+        return this.setState({ type: 'text' });
       default:
-        return this.setState({ inputType: 'boolean' });
+        return this.setState({ type: 'boolean' });
     }
   };
 
   handleOperandChange = e => {
     switch (e.target.value) {
       case 'Equal':
-        return this.setState({ operandType: '===' });
+        return this.setState({ operand: '===' });
       case 'Greater than':
-        return this.setState({ operandType: '>' });
+        return this.setState({ operand: '>' });
       case 'Lesser than':
-        return this.setState({ operandType: '<' });
+        return this.setState({ operand: '<' });
     }
   };
 
@@ -83,7 +86,7 @@ class FormInput extends React.Component {
   };
 
   render() {
-    const { item, isChild, removeItem, onAddItemClick, onRemoveItemClick, renderChildren } = this.props;
+    const { item, isChild, removeItem, onAddItemClick, renderChildren } = this.props;
     return (
       <Container>
         <div className={isChild ? 'input-component sub-input' : 'sub-input'}>
@@ -129,7 +132,7 @@ class FormInput extends React.Component {
             </Button>
             <Button
               color="danger"
-              onClick={isChild ? onRemoveItemClick : removeItem}
+              onClick={removeItem}
             >
               Delete
             </Button>

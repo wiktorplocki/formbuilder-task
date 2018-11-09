@@ -27,6 +27,7 @@ const MOCK_DATA = [
           {
             id: shortid.generate(),
             type: 'number',
+            operand: '>',
             question: 'How many wheels on your Ford?',
             answer: '4',
             children: [
@@ -34,20 +35,19 @@ const MOCK_DATA = [
                 id: shortid.generate(),
                 type: 'boolean',
                 question: 'Is your Ford road legal?',
-                operand: '>',
                 answer: null,
                 children: []
               }
             ]
-          },
-          {
-            id: shortid.generate(),
-            type: 'boolean',
-            question: 'Has your Toyota been recalled?',
-            answer: 'Toyota',
-            children: []
           }
         ]
+      },
+      {
+        id: shortid.generate(),
+        type: 'boolean',
+        question: 'Has your Toyota been recalled?',
+        answer: 'Toyota',
+        children: []
       }
     ]
   },
@@ -155,15 +155,26 @@ class FormRoot extends React.Component {
 
   renderChildren = children => {
     if (children && children.length > 0) {
-      return <div className="sub-input">{this.renderData(children, true)}</div>;
+      return children.map((child, childIndex) => (
+        <FormInput
+          item={child}
+          isChild
+          addItemToState={this.addItemToState}
+          onAddItemClick={() => this.onAddItemClick(child.id)}
+          removeItemFromState={this.removeItemFromState}
+          onRemoveItemClick={() => this.onRemoveItemClick(child.id)}
+          removeItem={() => this.removeItem(childIndex)}
+          renderChildren={this.renderChildren}
+        />
+      ))
     }
   };
 
-  renderData = (items, isChild) =>
+  renderData = items =>
     items.map((item, i) => (
       <FormInput
         item={item}
-        isChild={isChild}
+        isChild={false}
         addItemToState={this.addItemToState}
         onAddItemClick={() => this.onAddItemClick(item.id)}
         removeItemFromState={this.removeItemFromState}
