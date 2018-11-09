@@ -1,6 +1,6 @@
 # formbuilder-task
 
-Recursive form builder app built with React, Reactstrap 4 and Dexie(IndexedDB).
+Recursive form builder app built with React, Bootstrap 4 (Reactstrap) and Dexie(IndexedDB).
 
 Implemented functionality:
 1. Items can be added ad infinitum.
