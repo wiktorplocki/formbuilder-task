@@ -79,10 +79,11 @@ class FormRoot extends React.Component {
     const { data } = this.state;
     const NEW_OBJECT = {
       id: shortid.generate(),
-      type: 'boolean',
-      operand: '===',
       question: '',
       answer: true,
+      type: 'boolean',
+      operand: '===',
+      selectValue: true,
       children: []
     };
     e.preventDefault();
@@ -93,10 +94,11 @@ class FormRoot extends React.Component {
     return list.map(item => {
       const NEW_OBJECT = {
         id: shortid.generate(),
-        type: item.type,
-        operand: item.operand,
         question: '',
-        answer: item.answer,
+        answer: true,
+        type: 'boolean',
+        operand: '===',
+        selectValue: true,
         children: []
       };
       if (item.id !== id) {
