@@ -11,6 +11,7 @@ class FormInput extends React.Component {
       answer: '',
       type: this.props.item ? this.props.item.type : 'boolean',
       operand: this.props.item ? this.props.item.operand : '===',
+      selectValue: true,
       children: this.props.item ? this.props.item.children : []
     };
   }
@@ -44,6 +45,19 @@ class FormInput extends React.Component {
         return this.setState({ operand: '>' });
       case 'Lesser than':
         return this.setState({ operand: '<' });
+      default:
+        return this.setState({ operand: '===' });
+    }
+  };
+
+  handleSelectValue = e => {
+    switch (e.target.value) {
+      case 'Yes':
+        return this.setState({ selectValue: true });
+      case 'No':
+        return this.setState({ selectValue: false });
+      default:
+        return this.setState({ selectValue: true });
     }
   };
 
@@ -55,13 +69,12 @@ class FormInput extends React.Component {
         return (
           <Input
             type="select"
-            value={selectValue}
-            onChange={this.handleAnswerChange}
+            onChange={this.handleSelectValue}
           >
-            <option value selected={selectValue}>
+            <option value selected={selectValue === true}>
               Yes
             </option>
-            <option value={false} selected={selectValue}>
+            <option value={false} selected={selectValue === false}>
               No
             </option>
           </Input>
