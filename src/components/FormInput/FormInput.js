@@ -63,7 +63,7 @@ class FormInput extends React.Component {
 
   renderComparatorSection = () => {
     const { item } = this.props;
-    const { selectValue } = this.state;
+    const { selectValue, answer } = this.state;
     switch (item.type) {
       case 'boolean':
         return (
@@ -83,7 +83,7 @@ class FormInput extends React.Component {
         return (
           <Input
             type="text"
-            defaultValue={item.answer}
+            defaultValue={answer}
             onChange={this.handleAnswerChange}
           />
         );
@@ -91,7 +91,7 @@ class FormInput extends React.Component {
         return (
           <Input
             type="number"
-            defaultValue={item.answer}
+            defaultValue={answer}
             onChange={this.handleAnswerChange}
           />
         );
@@ -113,11 +113,11 @@ class FormInput extends React.Component {
                     id="formCondition"
                     onChange={this.handleOperandChange}
                   >
-                    <option selected={item.operand === '==='}>Equals</option>
-                    <option selected={item.operand === '>'}>
+                    <option selected={this.state.operand === '==='}>Equals</option>
+                    <option selected={this.state.operand === '>'}>
                       Greater than
                     </option>
-                    <option selected={item.operand === '<'}>Lesser than</option>
+                    <option selected={this.state.operand === '<'}>Lesser than</option>
                   </Input>
                   {this.renderComparatorSection()}
                 </span>
@@ -126,7 +126,7 @@ class FormInput extends React.Component {
               <Input
                 type="text"
                 id="formQuestion"
-                defaultValue={item.question}
+                defaultValue={this.state.question}
                 onChange={this.handleQuestionChange}
               />
               <Label for="formType">Type</Label>
@@ -135,9 +135,9 @@ class FormInput extends React.Component {
                 id="formType"
                 onChange={this.handleInputTypeChange}
               >
-                <option selected={item.type === 'boolean'}>Yes / No</option>
-                <option selected={item.type === 'text'}>Text</option>
-                <option selected={item.type === 'number'}>Number</option>
+                <option selected={this.state.type === 'boolean'}>Yes / No</option>
+                <option selected={this.state.type === 'text'}>Text</option>
+                <option selected={this.state.type === 'number'}>Number</option>
               </Input>
             </FormGroup>
             <Button color="primary" onClick={onAddItemClick()}>

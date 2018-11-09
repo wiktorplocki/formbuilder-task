@@ -1,5 +1,6 @@
 import React from 'react';
 import shortid from 'shortid';
+import db from '../../database';
 import { Button, Container, Form } from 'reactstrap';
 
 import FormInput from '../FormInput/FormInput';
@@ -75,6 +76,25 @@ class FormRoot extends React.Component {
     };
   }
 
+  componentDidMount() {
+    db.table('data')
+      .toArray()
+      .then(data => this.setState({ data }))
+      .catch(error => console.error(error));
+    db.on('changes', null, true);
+    window.addEventListener('beforeunload', this.persistDatabase)
+  }
+
+  componentWillUnmount() {
+    const { data } = this.state;
+    window.removeEventListener(this.persistDatabase());
+  }
+
+  persistDatabase = () => {
+    const { data } = this.state;
+    db.table('data').bulkPut(data);
+  }
+
   addItem = e => {
     const { data } = this.state;
     const NEW_OBJECT = {
@@ -88,6 +108,7 @@ class FormRoot extends React.Component {
     };
     e.preventDefault();
     this.setState({ data: data.concat(NEW_OBJECT) });
+    db.data.put(NEW_OBJECT).catch(error => console.error(error));
   };
 
   addItemToState = (list, id) => {
@@ -118,6 +139,9 @@ class FormRoot extends React.Component {
     e.preventDefault();
     this.setState(prevState => {
       const nextState = this.addItemToState(prevState.data, id);
+      console.log(nextState[0].children);
+      db.table('data').update({ id },{children: nextState[0].children});
+      // db.table('data').put({ id, children: nextState[0] });
       return {
         data: nextState
       };
@@ -153,7 +177,11 @@ class FormRoot extends React.Component {
 
   removeItem = index => {
     const { data } = this.state;
-    this.setState({ data: data.filter((item, i) => index !== i) });
+    const { id } = data.find(item => item);
+    db.table('data')
+      .delete(id)
+      .then(() => this.setState({ data: data.filter((item, i) => index !== i) }))
+      .catch(error => console.error(error));
   };
 
   renderChildren = children => {
