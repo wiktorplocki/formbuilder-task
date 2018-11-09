@@ -133,7 +133,6 @@ class FormInput extends React.Component {
             >
               Delete
             </Button>
-            <Button color="success" onClick={onRemoveItemClick}>Success</Button>
             {renderChildren(item.children)}
           </Form>
         </div>

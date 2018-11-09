@@ -76,6 +76,7 @@ class FormRoot extends React.Component {
   }
 
   addItem = e => {
+    const { data } = this.state;
     const NEW_OBJECT = {
       id: shortid.generate(),
       type: 'boolean',
