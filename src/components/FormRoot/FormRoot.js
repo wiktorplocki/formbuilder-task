@@ -82,17 +82,6 @@ class FormRoot extends React.Component {
       .then(data => this.setState({ data }))
       .catch(error => console.error(error));
     db.on('changes', null, true);
-    window.addEventListener('beforeunload', this.persistDatabase)
-  }
-
-  componentWillUnmount() {
-    const { data } = this.state;
-    window.removeEventListener(this.persistDatabase());
-  }
-
-  persistDatabase = () => {
-    const { data } = this.state;
-    db.table('data').bulkPut(data);
   }
 
   addItem = e => {
@@ -139,9 +128,7 @@ class FormRoot extends React.Component {
     e.preventDefault();
     this.setState(prevState => {
       const nextState = this.addItemToState(prevState.data, id);
-      console.log(nextState[0].children);
-      db.table('data').update({ id },{children: nextState[0].children});
-      // db.table('data').put({ id, children: nextState[0] });
+      db.table('data').update({ id }, { children: nextState[0].children });
       return {
         data: nextState
       };
